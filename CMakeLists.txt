@@ -47,6 +47,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
 add_library(${PROJECT_NAME} SHARED
     src/AsyncSerial.cpp
+    src/OniReader.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

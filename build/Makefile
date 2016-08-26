@@ -151,6 +151,30 @@ src/AsyncSerial.cpp.s:
 	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/src/AsyncSerial.cpp.s
 .PHONY : src/AsyncSerial.cpp.s
 
+src/OniReader.o: src/OniReader.cpp.o
+.PHONY : src/OniReader.o
+
+# target to build an object file
+src/OniReader.cpp.o:
+	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/src/OniReader.cpp.o
+.PHONY : src/OniReader.cpp.o
+
+src/OniReader.i: src/OniReader.cpp.i
+.PHONY : src/OniReader.i
+
+# target to preprocess a source file
+src/OniReader.cpp.i:
+	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/src/OniReader.cpp.i
+.PHONY : src/OniReader.cpp.i
+
+src/OniReader.s: src/OniReader.cpp.s
+.PHONY : src/OniReader.s
+
+# target to generate assembly for a file
+src/OniReader.cpp.s:
+	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/src/OniReader.cpp.s
+.PHONY : src/OniReader.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -188,6 +212,9 @@ help:
 	@echo "... src/AsyncSerial.o"
 	@echo "... src/AsyncSerial.i"
 	@echo "... src/AsyncSerial.s"
+	@echo "... src/OniReader.o"
+	@echo "... src/OniReader.i"
+	@echo "... src/OniReader.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
