@@ -34,6 +34,7 @@ bool firstFrame = true;
 bool firstIMU = true;
 int frameReady = 0;
 int colorReady = 0;
+int depthReday = 0;
 
 void analyzeFrame(const VideoFrameRef& frame)
 {
@@ -53,12 +54,12 @@ void analyzeFrame(const VideoFrameRef& frame)
         case PIXEL_FORMAT_DEPTH_1_MM:
         case PIXEL_FORMAT_DEPTH_100_UM:
             frameReady = 1;
+            depthReday = 1;
             pDepth = (DepthPixel*)frame.getData();
             //printf("[%08llu] %8d\n", (long long)frame.getTimestamp(),
             //      pDepth[middleIndex]);
             memcpy(dMat.data, pDepth, height*width*2);
             cv::imshow("depth", dMat);
-            cv::waitKey(1);
             if(ifrecord){
                     float timeStamp = (long long)frame.getTimestamp()/1000000.f;
                     if(firstFrame){
@@ -86,9 +87,9 @@ void analyzeFrame(const VideoFrameRef& frame)
             //        pColor[middleIndex].g&0xff,
             //        pColor[middleIndex].b&0xff);
             memcpy(cMat.data, pColor, height*width*3);
+            cv::cvtColor(cMat, cMat, CV_RGB2BGR);
             cv::imshow("color", cMat);
-            cv::waitKey(1);
-            if(ifrecord){
+            if(ifrecord&&depthReday){
                 float timeStamp = (long long)frame.getTimestamp()/1000000.f;
                 if(firstFrame){
                     base_timeStamp = timeStamp;
