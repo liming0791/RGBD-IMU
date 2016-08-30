@@ -102,6 +102,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named OfflineRecord
+
+# Build rule for target.
+OfflineRecord: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 OfflineRecord
+.PHONY : OfflineRecord
+
+# fast build rule for target.
+OfflineRecord/fast:
+	$(MAKE) -f CMakeFiles/OfflineRecord.dir/build.make CMakeFiles/OfflineRecord.dir/build
+.PHONY : OfflineRecord/fast
+
+#=============================================================================
+# Target rules for targets named OnlineRecord
+
+# Build rule for target.
+OnlineRecord: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 OnlineRecord
+.PHONY : OnlineRecord
+
+# fast build rule for target.
+OnlineRecord/fast:
+	$(MAKE) -f CMakeFiles/OnlineRecord.dir/build.make CMakeFiles/OnlineRecord.dir/build
+.PHONY : OnlineRecord/fast
+
+#=============================================================================
 # Target rules for targets named SerialPort
 
 # Build rule for target.
@@ -113,19 +139,6 @@ SerialPort: cmake_check_build_system
 SerialPort/fast:
 	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/build
 .PHONY : SerialPort/fast
-
-#=============================================================================
-# Target rules for targets named testPort
-
-# Build rule for target.
-testPort: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 testPort
-.PHONY : testPort
-
-# fast build rule for target.
-testPort/fast:
-	$(MAKE) -f CMakeFiles/testPort.dir/build.make CMakeFiles/testPort.dir/build
-.PHONY : testPort/fast
 
 src/AsyncSerial.o: src/AsyncSerial.cpp.o
 .PHONY : src/AsyncSerial.o
@@ -151,6 +164,30 @@ src/AsyncSerial.cpp.s:
 	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/src/AsyncSerial.cpp.s
 .PHONY : src/AsyncSerial.cpp.s
 
+src/OfflineRecord.o: src/OfflineRecord.cpp.o
+.PHONY : src/OfflineRecord.o
+
+# target to build an object file
+src/OfflineRecord.cpp.o:
+	$(MAKE) -f CMakeFiles/OfflineRecord.dir/build.make CMakeFiles/OfflineRecord.dir/src/OfflineRecord.cpp.o
+.PHONY : src/OfflineRecord.cpp.o
+
+src/OfflineRecord.i: src/OfflineRecord.cpp.i
+.PHONY : src/OfflineRecord.i
+
+# target to preprocess a source file
+src/OfflineRecord.cpp.i:
+	$(MAKE) -f CMakeFiles/OfflineRecord.dir/build.make CMakeFiles/OfflineRecord.dir/src/OfflineRecord.cpp.i
+.PHONY : src/OfflineRecord.cpp.i
+
+src/OfflineRecord.s: src/OfflineRecord.cpp.s
+.PHONY : src/OfflineRecord.s
+
+# target to generate assembly for a file
+src/OfflineRecord.cpp.s:
+	$(MAKE) -f CMakeFiles/OfflineRecord.dir/build.make CMakeFiles/OfflineRecord.dir/src/OfflineRecord.cpp.s
+.PHONY : src/OfflineRecord.cpp.s
+
 src/OniReader.o: src/OniReader.cpp.o
 .PHONY : src/OniReader.o
 
@@ -175,29 +212,53 @@ src/OniReader.cpp.s:
 	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/src/OniReader.cpp.s
 .PHONY : src/OniReader.cpp.s
 
-src/main.o: src/main.cpp.o
-.PHONY : src/main.o
+src/Oni_IMU.o: src/Oni_IMU.cpp.o
+.PHONY : src/Oni_IMU.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/testPort.dir/build.make CMakeFiles/testPort.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+src/Oni_IMU.cpp.o:
+	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/src/Oni_IMU.cpp.o
+.PHONY : src/Oni_IMU.cpp.o
 
-src/main.i: src/main.cpp.i
-.PHONY : src/main.i
+src/Oni_IMU.i: src/Oni_IMU.cpp.i
+.PHONY : src/Oni_IMU.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/testPort.dir/build.make CMakeFiles/testPort.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/Oni_IMU.cpp.i:
+	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/src/Oni_IMU.cpp.i
+.PHONY : src/Oni_IMU.cpp.i
 
-src/main.s: src/main.cpp.s
-.PHONY : src/main.s
+src/Oni_IMU.s: src/Oni_IMU.cpp.s
+.PHONY : src/Oni_IMU.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/testPort.dir/build.make CMakeFiles/testPort.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/Oni_IMU.cpp.s:
+	$(MAKE) -f CMakeFiles/SerialPort.dir/build.make CMakeFiles/SerialPort.dir/src/Oni_IMU.cpp.s
+.PHONY : src/Oni_IMU.cpp.s
+
+src/OnlineRecord.o: src/OnlineRecord.cpp.o
+.PHONY : src/OnlineRecord.o
+
+# target to build an object file
+src/OnlineRecord.cpp.o:
+	$(MAKE) -f CMakeFiles/OnlineRecord.dir/build.make CMakeFiles/OnlineRecord.dir/src/OnlineRecord.cpp.o
+.PHONY : src/OnlineRecord.cpp.o
+
+src/OnlineRecord.i: src/OnlineRecord.cpp.i
+.PHONY : src/OnlineRecord.i
+
+# target to preprocess a source file
+src/OnlineRecord.cpp.i:
+	$(MAKE) -f CMakeFiles/OnlineRecord.dir/build.make CMakeFiles/OnlineRecord.dir/src/OnlineRecord.cpp.i
+.PHONY : src/OnlineRecord.cpp.i
+
+src/OnlineRecord.s: src/OnlineRecord.cpp.s
+.PHONY : src/OnlineRecord.s
+
+# target to generate assembly for a file
+src/OnlineRecord.cpp.s:
+	$(MAKE) -f CMakeFiles/OnlineRecord.dir/build.make CMakeFiles/OnlineRecord.dir/src/OnlineRecord.cpp.s
+.PHONY : src/OnlineRecord.cpp.s
 
 # Help Target
 help:
@@ -207,17 +268,24 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... testPort"
 	@echo "... SerialPort"
+	@echo "... OnlineRecord"
+	@echo "... OfflineRecord"
 	@echo "... src/AsyncSerial.o"
 	@echo "... src/AsyncSerial.i"
 	@echo "... src/AsyncSerial.s"
+	@echo "... src/OfflineRecord.o"
+	@echo "... src/OfflineRecord.i"
+	@echo "... src/OfflineRecord.s"
 	@echo "... src/OniReader.o"
 	@echo "... src/OniReader.i"
 	@echo "... src/OniReader.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... src/Oni_IMU.o"
+	@echo "... src/Oni_IMU.i"
+	@echo "... src/Oni_IMU.s"
+	@echo "... src/OnlineRecord.o"
+	@echo "... src/OnlineRecord.i"
+	@echo "... src/OnlineRecord.s"
 .PHONY : help
 
 

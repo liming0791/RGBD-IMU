@@ -36,81 +36,73 @@ int frameReady = 0;
 int colorReady = 0;
 int depthReday = 0;
 
-void analyzeFrame(const VideoFrameRef& frame)
+void analyzeFrame(const VideoFrameRef& depthFrame, const VideoFrameRef& colorFrame)
 {
     DepthPixel* pDepth;
     RGB888Pixel* pColor;
 
-    int height = frame.getHeight();
-    int width = frame.getWidth();
+    int height = colorFrame.getHeight();
+    int width = depthFrame.getWidth();
     cv::Mat dMat(height, width, CV_16UC1);
     cv::Mat cMat(height, width, CV_8UC3);
     char name[20] = "";
     //printf("width: %d, height: %d\n", width, height);
     //int middleIndex = (height+1)*width/2;
 
-    switch (frame.getVideoMode().getPixelFormat())
-    {
-        case PIXEL_FORMAT_DEPTH_1_MM:
-        case PIXEL_FORMAT_DEPTH_100_UM:
-            frameReady = 1;
-            depthReday = 1;
-            pDepth = (DepthPixel*)frame.getData();
-            //printf("[%08llu] %8d\n", (long long)frame.getTimestamp(),
-            //      pDepth[middleIndex]);
-            memcpy(dMat.data, pDepth, height*width*2);
-            cv::imshow("depth", dMat);
-            if(ifrecord){
-                    float timeStamp = (long long)frame.getTimestamp()/1000000.f;
-                    if(firstFrame){
-                        base_timeStamp = timeStamp;
-                        firstFrame = false;
-                    } sprintf(name, "d%04d %.6f", depthNo, timeStamp - base_timeStamp);
-                    depth_frameFile << name << endl;
-                    sprintf(name, "d%04d.png", depthNo++ );
-                    cv::imwrite(name, dMat);
-            }
-            //time it
-            d_count++;
-            if(d_count==10){
-                d_count = 0;
-                auto d_end_time = chrono::high_resolution_clock::now();
-                cout << "depth: " << 1.f / (chrono::duration_cast<chrono::microseconds>(d_end_time-d_start_time).count()/1000000.f/10.f) << "Hz" << endl;
-                d_start_time = chrono::high_resolution_clock::now();
-            }
+    //depthFrame
+    frameReady = 1;
+    depthReday = 1;
+    pDepth = (DepthPixel*)colorFrame.getData();
+    //printf("[%08llu] %8d\n", (long long)frame.getTimestamp(),
+    //      pDepth[middleIndex]);
+    memcpy(dMat.data, pDepth, height*width*2);
+    cv::imshow("depth", dMat);
+    if(ifrecord){
+        float timeStamp = (long long)depthFrame.getTimestamp()/1000000.f;
+        if(firstFrame){
+            base_timeStamp = timeStamp;
+            firstFrame = false;
+        } sprintf(name, "d%04d %.6f", depthNo, timeStamp - base_timeStamp);
+        depth_frameFile << name << endl;
+        sprintf(name, "d%04d.png", depthNo++ );
+        cv::imwrite(name, dMat);
+    }
+    //time it
+    d_count++;
+    if(d_count==10){
+        d_count = 0;
+        auto d_end_time = chrono::high_resolution_clock::now();
+        cout << "depth: " << 1.f / (chrono::duration_cast<chrono::microseconds>(d_end_time-d_start_time).count()/1000000.f/10.f) << "Hz" << endl;
+        d_start_time = chrono::high_resolution_clock::now();
+    }
 
-            break;
-        case PIXEL_FORMAT_RGB888:
-            pColor = (RGB888Pixel*)frame.getData();
-            //printf("[%08llu] 0x%02x%02x%02x\n", (long long)frame.getTimestamp(),
-            //        pColor[middleIndex].r&0xff,
-            //        pColor[middleIndex].g&0xff,
-            //        pColor[middleIndex].b&0xff);
-            memcpy(cMat.data, pColor, height*width*3);
-            cv::cvtColor(cMat, cMat, CV_RGB2BGR);
-            cv::imshow("color", cMat);
-            if(ifrecord&&depthReday){
-                float timeStamp = (long long)frame.getTimestamp()/1000000.f;
-                if(firstFrame){
-                    base_timeStamp = timeStamp;
-                    firstFrame = false;
-                }
-                sprintf(name, "c%04d %.6f", colorNo, timeStamp - base_timeStamp);
-                color_frameFile << name << endl;
-                sprintf(name, "c%04d.png", colorNo++ );
-                cv::imwrite(name, cMat);
-            }
-            //time it
-            c_count++;
-            if(c_count==10){
-                c_count = 0;
-                auto c_end_time = chrono::high_resolution_clock::now();
-                cout << "color: " << 1.f / (chrono::duration_cast<chrono::microseconds>(c_end_time-c_start_time).count()/1000000.f/10.f) << "Hz" << endl;
-                c_start_time = chrono::high_resolution_clock::now();
-            }
-            break;
-        default:
-            printf("Unknown format\n");
+    //colorFrame
+    pColor = (RGB888Pixel*)colorFrame.getData();
+    //printf("[%08llu] 0x%02x%02x%02x\n", (long long)frame.getTimestamp(),
+    //        pColor[middleIndex].r&0xff,
+    //        pColor[middleIndex].g&0xff,
+    //        pColor[middleIndex].b&0xff);
+    memcpy(cMat.data, pColor, height*width*3);
+    cv::cvtColor(cMat, cMat, CV_RGB2BGR);
+    cv::imshow("color", cMat);
+    if(ifrecord&&depthReday){
+        float timeStamp = (long long)colorFrame.getTimestamp()/1000000.f;
+        if(firstFrame){
+            base_timeStamp = timeStamp;
+            firstFrame = false;
+        }
+        sprintf(name, "c%04d %.6f", colorNo, timeStamp - base_timeStamp);
+        color_frameFile << name << endl;
+        sprintf(name, "c%04d.png", colorNo++ );
+        cv::imwrite(name, cMat);
+    }
+    //time it
+    c_count++;
+    if(c_count==10){
+        c_count = 0;
+        auto c_end_time = chrono::high_resolution_clock::now();
+        cout << "color: " << 1.f / (chrono::duration_cast<chrono::microseconds>(c_end_time-c_start_time).count()/1000000.f/10.f) << "Hz" << endl;
+        c_start_time = chrono::high_resolution_clock::now();
     }
 }
 

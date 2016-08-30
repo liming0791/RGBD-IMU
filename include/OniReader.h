@@ -5,7 +5,6 @@
 #include <boost/thread.hpp>
 
 #include <OpenNI.h> 
-#include "OniSampleUtilities.h"
 
 using namespace openni;
 using namespace std;
@@ -15,15 +14,16 @@ class OniReader
     public:
         OniReader();
         ~OniReader();
-        void setCallback(const boost::function<void (VideoFrameRef&)>& callback);
+        bool init(int* width = NULL, int* height = NULL);
+        void setCallback(const boost::function<void (VideoFrameRef&, VideoFrameRef&)>& callback);
         void close();
         void begin();
     private:
         Device device;
         VideoStream depth, color;
-        VideoFrameRef frame;
+        VideoFrameRef colorFrame, depthFrame;
         VideoStream* streams[2];
-        boost::function<void (VideoFrameRef&)> _callback;
+        boost::function<void (VideoFrameRef&, VideoFrameRef&)> _callback;
         void loop();
         bool started;
         Status rc;

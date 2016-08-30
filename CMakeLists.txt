@@ -48,6 +48,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 add_library(${PROJECT_NAME} SHARED
     src/AsyncSerial.cpp
     src/OniReader.cpp
+    src/Oni_IMU.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -59,5 +60,8 @@ ${OpenNI_LIBRARY}
 # Build tests
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
-add_executable(testPort src/main.cpp)
-target_link_libraries(testPort ${PROJECT_NAME})
+add_executable(OfflineRecord src/OfflineRecord.cpp)
+target_link_libraries(OfflineRecord ${PROJECT_NAME})
+
+add_executable(OnlineRecord src/OnlineRecord.cpp)
+target_link_libraries(OnlineRecord ${PROJECT_NAME})

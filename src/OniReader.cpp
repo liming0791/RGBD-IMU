@@ -7,17 +7,34 @@ using namespace std;
 
 OniReader::OniReader()
 {
+       
+}
+
+OniReader::~OniReader()
+{
+    started = false;
+    depth.stop();
+    color.stop();
+    depth.destroy();
+    color.destroy();
+    device.close();
+    OpenNI::shutdown();
+}
+
+bool OniReader::init(int* width, int* height){
     //open kinect
     rc = OpenNI::initialize();
     if (rc != STATUS_OK)
     {
         printf("Initialize failed\n%s\n", OpenNI::getExtendedError());
+        return false;
     }
 
     rc = device.open(ANY_DEVICE);
     if (rc != STATUS_OK)
     {
         printf("Couldn't open device\n%s\n", OpenNI::getExtendedError());
+        return false;
     }
 
     //set DepthColorSync
@@ -36,12 +53,14 @@ OniReader::OniReader()
             rc = depth.start();
             if (rc != STATUS_OK)
             {
-                printf("Couldn't start the color stream\n%s\n", OpenNI::getExtendedError());
+                printf("Couldn't start the depth stream\n%s\n", OpenNI::getExtendedError());
+                return false;
             }
         }
         else
         {
             printf("Couldn't create depth stream\n%s\n", OpenNI::getExtendedError());
+            return false;
         }
     }
 
@@ -54,11 +73,18 @@ OniReader::OniReader()
             if (rc != STATUS_OK)
             {
                 printf("Couldn't start the color stream\n%s\n", OpenNI::getExtendedError());
+                return false;
+            }
+            if(width!=NULL && height!=NULL){
+               *width = color.getVideoMode().getResolutionX();
+               *height = color.getVideoMode().getResolutionY(); 
+               printf("open stream width: %d height: %d\n", *width, *height);
             }
         }
         else
         {
             printf("Couldn't create color stream\n%s\n", OpenNI::getExtendedError());
+            return false;
         }
     }
 
@@ -78,18 +104,7 @@ OniReader::OniReader()
     streams[1] = &color;
 
     started = false;
-       
-}
-
-OniReader::~OniReader()
-{
-    started = false;
-    depth.stop();
-    color.stop();
-    depth.destroy();
-    color.destroy();
-    device.close();
-    OpenNI::shutdown();
+    return true;
 }
 
 void OniReader::close()
@@ -118,31 +133,22 @@ void OniReader::loop()
             break;
         }
 
-        switch (readyStream)
-        {
-            case 0:
-                // Depth
-                depth.readFrame(&frame);
-                break;
-            case 1:
-                // Color
-                color.readFrame(&frame);
-                break;
-            default:
-                printf("Unxpected stream\n");
-        }
+        // Depth
+        depth.readFrame(&depthFrame);
+        // Color
+        color.readFrame(&colorFrame);
 
         if(_callback){
             //boost::thread thrd(boost::bind(&OniReader::_callback, this, frame));
-            boost::thread thrd(_callback, frame);
-            thrd.detach();
-            //_callback(frame);
+            //boost::thread thrd(_callback, depthFrame, colorFrame);
+            //thrd.detach();
+            _callback(depthFrame, colorFrame);
         }
 
     }
 }
 
-void OniReader::setCallback(const boost::function<void (VideoFrameRef&) >& callback)
+void OniReader::setCallback(const boost::function<void (VideoFrameRef&, VideoFrameRef&) >& callback)
 {
     _callback = callback;
 }
