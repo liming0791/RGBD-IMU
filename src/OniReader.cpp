@@ -1,3 +1,6 @@
+#include <sys/syscall.h>
+#define gettid() syscall(__NR_gettid)
+
 #include "OniReader.h"
 
 using namespace openni;
@@ -7,7 +10,8 @@ using namespace std;
 
 OniReader::OniReader()
 {
-       
+    started = false;
+    inited = false; 
 }
 
 OniReader::~OniReader()
@@ -104,6 +108,7 @@ bool OniReader::init(int* width, int* height){
     streams[1] = &color;
 
     started = false;
+    inited = true;
     return true;
 }
 
@@ -114,6 +119,10 @@ void OniReader::close()
 
 void OniReader::begin()
 {
+    if(!inited){
+        printf("OniReader has not inited !\n");
+        return;
+    }
     started = true;
     boost::thread thrd(boost::bind(&OniReader::loop, this));
     thrd.detach();
@@ -121,6 +130,9 @@ void OniReader::begin()
 
 void OniReader::loop()
 {
+
+    std::cout << "OniReader pid: "<< gettid() << std::endl;
+
     while (started)
     {
         //read kinect

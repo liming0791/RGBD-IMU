@@ -65,3 +65,6 @@ target_link_libraries(OfflineRecord ${PROJECT_NAME})
 
 add_executable(OnlineRecord src/OnlineRecord.cpp)
 target_link_libraries(OnlineRecord ${PROJECT_NAME})
+
+add_executable(OnlineRecord_onlyFrame src/OnlineRecord_onlyFrame.cpp)
+target_link_libraries(OnlineRecord_onlyFrame ${PROJECT_NAME})

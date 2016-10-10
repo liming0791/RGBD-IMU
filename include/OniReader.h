@@ -26,6 +26,7 @@ class OniReader
         boost::function<void (VideoFrameRef&, VideoFrameRef&)> _callback;
         void loop();
         bool started;
+        bool inited;
         Status rc;
 };
 

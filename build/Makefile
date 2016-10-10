@@ -128,6 +128,19 @@ OnlineRecord/fast:
 .PHONY : OnlineRecord/fast
 
 #=============================================================================
+# Target rules for targets named OnlineRecord_onlyFrame
+
+# Build rule for target.
+OnlineRecord_onlyFrame: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 OnlineRecord_onlyFrame
+.PHONY : OnlineRecord_onlyFrame
+
+# fast build rule for target.
+OnlineRecord_onlyFrame/fast:
+	$(MAKE) -f CMakeFiles/OnlineRecord_onlyFrame.dir/build.make CMakeFiles/OnlineRecord_onlyFrame.dir/build
+.PHONY : OnlineRecord_onlyFrame/fast
+
+#=============================================================================
 # Target rules for targets named SerialPort
 
 # Build rule for target.
@@ -260,6 +273,30 @@ src/OnlineRecord.cpp.s:
 	$(MAKE) -f CMakeFiles/OnlineRecord.dir/build.make CMakeFiles/OnlineRecord.dir/src/OnlineRecord.cpp.s
 .PHONY : src/OnlineRecord.cpp.s
 
+src/OnlineRecord_onlyFrame.o: src/OnlineRecord_onlyFrame.cpp.o
+.PHONY : src/OnlineRecord_onlyFrame.o
+
+# target to build an object file
+src/OnlineRecord_onlyFrame.cpp.o:
+	$(MAKE) -f CMakeFiles/OnlineRecord_onlyFrame.dir/build.make CMakeFiles/OnlineRecord_onlyFrame.dir/src/OnlineRecord_onlyFrame.cpp.o
+.PHONY : src/OnlineRecord_onlyFrame.cpp.o
+
+src/OnlineRecord_onlyFrame.i: src/OnlineRecord_onlyFrame.cpp.i
+.PHONY : src/OnlineRecord_onlyFrame.i
+
+# target to preprocess a source file
+src/OnlineRecord_onlyFrame.cpp.i:
+	$(MAKE) -f CMakeFiles/OnlineRecord_onlyFrame.dir/build.make CMakeFiles/OnlineRecord_onlyFrame.dir/src/OnlineRecord_onlyFrame.cpp.i
+.PHONY : src/OnlineRecord_onlyFrame.cpp.i
+
+src/OnlineRecord_onlyFrame.s: src/OnlineRecord_onlyFrame.cpp.s
+.PHONY : src/OnlineRecord_onlyFrame.s
+
+# target to generate assembly for a file
+src/OnlineRecord_onlyFrame.cpp.s:
+	$(MAKE) -f CMakeFiles/OnlineRecord_onlyFrame.dir/build.make CMakeFiles/OnlineRecord_onlyFrame.dir/src/OnlineRecord_onlyFrame.cpp.s
+.PHONY : src/OnlineRecord_onlyFrame.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -271,6 +308,7 @@ help:
 	@echo "... SerialPort"
 	@echo "... OnlineRecord"
 	@echo "... OfflineRecord"
+	@echo "... OnlineRecord_onlyFrame"
 	@echo "... src/AsyncSerial.o"
 	@echo "... src/AsyncSerial.i"
 	@echo "... src/AsyncSerial.s"
@@ -286,6 +324,9 @@ help:
 	@echo "... src/OnlineRecord.o"
 	@echo "... src/OnlineRecord.i"
 	@echo "... src/OnlineRecord.s"
+	@echo "... src/OnlineRecord_onlyFrame.o"
+	@echo "... src/OnlineRecord_onlyFrame.i"
+	@echo "... src/OnlineRecord_onlyFrame.s"
 .PHONY : help
 
 
